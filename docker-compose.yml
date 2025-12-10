@@ -40,8 +40,8 @@ x-sentry-defaults: &sentry_defaults
       <<: *depends_on-healthy
     memcached:
       <<: *depends_on-default
-    smtp:
-      <<: *depends_on-default
+    #smtp:
+    #  <<: *depends_on-default
     seaweedfs:
       <<: *depends_on-default
     snuba-api:
@@ -100,14 +100,14 @@ x-snuba-defaults: &snuba_defaults
     # To start, state these environment variables below on your `.env.` file and adjust the options as needed.
     SNUBA_STATSD_ADDR: "${STATSD_ADDR:-}"
 services:
-  smtp:
-    <<: *restart_policy
-    image: registry.gitlab.com/egos-tech/smtp
-    volumes:
-      - "sentry-smtp:/var/spool/exim4"
-      - "sentry-smtp-log:/var/log/exim4"
-    environment:
-      - MAILNAME=${SENTRY_MAIL_HOST:-}
+  #smtp:
+  #  <<: *restart_policy
+  #  image: registry.gitlab.com/egos-tech/smtp
+  #  volumes:
+  #    - "sentry-smtp:/var/spool/exim4"
+  #    - "sentry-smtp-log:/var/log/exim4"
+  #  environment:
+  #    - MAILNAME=${SENTRY_MAIL_HOST:-}
   memcached:
     <<: *restart_policy
     image: "memcached:1.6.26-alpine"
@@ -845,8 +845,8 @@ volumes:
   # These store ephemeral data that needn't persist across restarts.
   # That said, volumes will be persisted across restarts until they are deleted.
   sentry-secrets:
-  sentry-smtp:
+  #sentry-smtp:
   sentry-nginx-cache:
   sentry-kafka-log:
-  sentry-smtp-log:
+  #sentry-smtp-log:
   sentry-clickhouse-log:
